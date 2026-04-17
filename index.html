@@ -662,18 +662,18 @@
                 <p>22, Surya Niketan, Opp. Anand Vihar Main Gate, New Delhi – 110092</p>
               </div>
             </div>
-            <div class="cd-item">
+            <!-- <div class="cd-item">
               <span class="cd-icon">📱</span>
               <div>
                 <strong>Mobile</strong>
                 <p><a href="tel:+919650025550">+91 96500 25550</a></p>
               </div>
-            </div>
+            </div> -->
             <div class="cd-item">
               <span class="cd-icon">✉️</span>
               <div>
                 <strong>Email</strong>
-                <p><a href="mailto:singhprabhat56@gmail.com">singhprabhat56@gmail.com</a></p>
+                <p><a href="mailto:officeofprabhatsingh@gmail.com">officeofprabhatsingh@gmail.com</a></p>
               </div>
             </div>
           </div>
@@ -689,19 +689,24 @@
         <div class="contact-form-wrap">
           <form class="contact-form" id="contactForm">
             <h3>Send a Message</h3>
+
+            <!-- Formspree hidden fields -->
+            <input type="hidden" name="_replyto" id="replyToField" value="" />
+            <input type="hidden" name="_subject" value="New enquiry from prabhatsingh.in" />
+
             <div class="form-group">
-              <input type="text" placeholder="Your Name" required />
+              <input type="text" name="name" placeholder="Your Name" required />
             </div>
             <div class="form-group">
-              <input type="email" placeholder="Your Email" required />
+              <input type="email" name="email" id="emailField" placeholder="Your Email" required />
             </div>
             <div class="form-group">
-              <input type="text" placeholder="Organisation / Company" />
+              <input type="text" name="organisation" placeholder="Organisation / Company" />
             </div>
             <div class="form-group">
-              <select>
+              <select name="area_of_interest">
                 <option value="" disabled selected>Area of Interest</option>
-                <option>LNG Sourcing & Contract Strategy</option>
+                <option>LNG Sourcing &amp; Contract Strategy</option>
                 <option>Gas Market Development</option>
                 <option>Board / CXO Advisory</option>
                 <option>Speaking Engagement</option>
@@ -709,9 +714,19 @@
               </select>
             </div>
             <div class="form-group">
-              <textarea rows="4" placeholder="Brief description of your enquiry…"></textarea>
+              <textarea name="message" rows="4" placeholder="Brief description of your enquiry…"></textarea>
             </div>
-            <button type="submit" class="btn-primary btn-full">Send Message →</button>
+            <button type="submit" class="btn-primary btn-full" id="submitBtn">
+              Send Message →
+            </button>
+
+            <!-- Success / Error messages -->
+            <div class="form-success" id="formSuccess">
+              <span>✓</span> Message sent! Prabhat's office will get back to you shortly.
+            </div>
+            <div class="form-error" id="formError">
+              <span>✗</span> Something went wrong. Please email directly at <a href="mailto:officeofprabhatsingh@gmail.com">officeofprabhatsingh@gmail.com</a>
+            </div>
           </form>
         </div>
       </div>

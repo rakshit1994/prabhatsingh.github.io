@@ -127,22 +127,70 @@ const activeObserver = new IntersectionObserver((entries) => {
 
 sections.forEach(section => activeObserver.observe(section));
 
-// ── Contact form handler ──
+// ── Contact form — Formspree AJAX submission ──
+// Sign up at formspree.io, create a form, then paste your form ID below.
+const FORMSPREE_ID = 'mwvaovpk'; // ← replace with e.g. "xabcdefg"
+
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-  contactForm.addEventListener('submit', (e) => {
+  const submitBtn   = document.getElementById('submitBtn');
+  const successMsg  = document.getElementById('formSuccess');
+  const errorMsg    = document.getElementById('formError');
+  const emailField  = document.getElementById('emailField');
+  const replyTo     = document.getElementById('replyToField');
+
+  // Keep the hidden _replyto in sync with the visible email field
+  emailField.addEventListener('input', () => {
+    replyTo.value = emailField.value;
+  });
+
+  contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = contactForm.querySelector('button[type="submit"]');
-    const original = btn.textContent;
-    btn.textContent = 'Message Sent ✓';
-    btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-    btn.disabled = true;
-    setTimeout(() => {
-      btn.textContent = original;
-      btn.style.background = '';
-      btn.disabled = false;
-      contactForm.reset();
-    }, 3000);
+
+    // Guard: remind developer to set the Formspree ID
+    if (FORMSPREE_ID === 'YOUR_FORM_ID') {
+      errorMsg.style.display = 'flex';
+      errorMsg.querySelector('span').nextSibling.textContent =
+        ' Set your Formspree ID in app.js first.';
+      return;
+    }
+
+    // Loading state
+    const originalHTML = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="spinner"></span> Sending…';
+    submitBtn.disabled = true;
+    successMsg.style.display = 'none';
+    errorMsg.style.display   = 'none';
+
+    try {
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method:  'POST',
+        headers: { 'Accept': 'application/json' },
+        body:    new FormData(contactForm),
+      });
+
+      if (response.ok) {
+        // Success
+        submitBtn.innerHTML = '✓ Message Sent!';
+        submitBtn.style.background = 'linear-gradient(135deg,#059669,#047857)';
+        successMsg.style.display = 'flex';
+        contactForm.reset();
+        replyTo.value = '';
+        setTimeout(() => {
+          submitBtn.innerHTML = originalHTML;
+          submitBtn.style.background = '';
+          submitBtn.disabled = false;
+          successMsg.style.display = 'none';
+        }, 5000);
+      } else {
+        throw new Error('Network response not ok');
+      }
+    } catch {
+      submitBtn.innerHTML = originalHTML;
+      submitBtn.disabled = false;
+      errorMsg.style.display = 'flex';
+      setTimeout(() => { errorMsg.style.display = 'none'; }, 6000);
+    }
   });
 }
 

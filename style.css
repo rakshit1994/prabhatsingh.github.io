@@ -1140,6 +1140,46 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .form-group input::placeholder,
 .form-group textarea::placeholder { color: var(--text-muted); }
 
+.form-success,
+.form-error {
+  display: none;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.form-success {
+  background: rgba(5,150,105,0.08);
+  border: 1px solid rgba(5,150,105,0.25);
+  color: #065f46;
+}
+.form-success span { font-size: 16px; flex-shrink: 0; }
+.form-error {
+  background: rgba(220,38,38,0.07);
+  border: 1px solid rgba(220,38,38,0.2);
+  color: #991b1b;
+}
+.form-error span { font-size: 16px; flex-shrink: 0; }
+.form-error a { color: var(--accent); font-weight: 600; }
+
+.spinner {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 /* ── FOOTER ── */
 .footer {
   background: #0d1117;
